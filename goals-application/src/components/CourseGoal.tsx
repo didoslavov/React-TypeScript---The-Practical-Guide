@@ -12,7 +12,9 @@ const CourseGoal = ({ id, title, children, onDelete }: CourseGoalProps) => {
             <div>
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="font-black text-xl text-slate-400">{title}</h2>
-                    <button onClick={() => onDelete(id)} className="text-slate-500">
+                    <button
+                        onClick={() => onDelete(id)}
+                        className="text-slate-500 hover:text-orange-200 transition-colors duration-300">
                         Delete
                     </button>
                 </div>
