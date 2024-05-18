@@ -1,18 +1,23 @@
-import { ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 
-type CourseGoalProps = {
+type CourseGoalProps = PropsWithChildren<{
+    id: number;
     title: string;
-    children: ReactNode;
-};
+    onDelete: (id: number) => void;
+}>;
 
-const CourseGoal = ({ title, children }: CourseGoalProps) => {
+const CourseGoal = ({ id, title, children, onDelete }: CourseGoalProps) => {
     return (
         <article className="">
             <div>
-                <h2 className="font-black text-xl mb-4">{title}</h2>
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="font-black text-xl text-slate-400">{title}</h2>
+                    <button onClick={() => onDelete(id)} className="text-slate-500">
+                        Delete
+                    </button>
+                </div>
                 {children}
             </div>
-            <button className="rounded-sm px-6 py-1 bg-slate-100 text-slate-950">Delete</button>
         </article>
     );
 };
