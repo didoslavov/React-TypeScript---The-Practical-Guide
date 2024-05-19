@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { get } from './util/http';
 import BlogPosts, { BlogPost } from './components/BlogPosts';
 import fetchingImg from './assets/data-fetching.png';
+import ErrorMessage from './components/ErrorMessage';
 
 type RawPost = {
     userId: number;
@@ -12,17 +13,31 @@ type RawPost = {
 
 function App() {
     const [data, setData] = useState<BlogPost[]>();
+    const [isFetching, setIsFetching] = useState(false);
+    const [error, setError] = useState<string>();
 
     useEffect(() => {
-        get('https://jsonplaceholder.typicode.com/posts').then((response) => {
-            setData(
-                (response as RawPost[]).map((post) => ({
-                    id: post.id,
-                    title: post.title,
-                    text: post.body,
-                }))
-            );
-        });
+        setIsFetching(true);
+
+        get<RawPost[]>('https://jsonplaceholder.typicode.com/posts')
+            .then((response) => {
+                setData(
+                    response?.map((post) => ({
+                        id: post.id,
+                        title: post.title,
+                        text: post.body,
+                    }))
+                );
+            })
+            .catch((e) => {
+                if (e instanceof Error) {
+                    console.log(e.message);
+
+                    setError(e.message);
+                }
+            });
+
+        setIsFetching(false);
     }, []);
 
     return (
@@ -32,6 +47,8 @@ function App() {
                 alt="Data fetching image"
                 className="max-w-28 rounded-full mx-auto ring-2 ring-zinc-200 border-zinc-200"
             />
+            {isFetching && <p className="text-center mt-4 text-zinc-500 text-4xl">Fetching data...</p>}
+            {error && <ErrorMessage text={error} />}
             <BlogPosts posts={data || []} />
         </main>
     );
