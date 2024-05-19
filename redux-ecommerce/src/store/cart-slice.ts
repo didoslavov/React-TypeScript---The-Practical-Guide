@@ -32,3 +32,5 @@ export const cartSlice = createSlice({
         },
     },
 });
+
+export const { addItem, removeItem } = cartSlice.actions;
