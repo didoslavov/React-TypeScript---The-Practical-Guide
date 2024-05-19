@@ -1,4 +1,4 @@
-import { useTimersContext } from '../store/timers-context';
+import { useTimersContext } from '../hooks/use-timers-context';
 import Timer from './Timer';
 
 const Timers = () => {

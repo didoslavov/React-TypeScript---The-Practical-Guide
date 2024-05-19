@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import Form, { FormHandle } from './ui/Form';
 import Input from './ui/Input';
 import Button from './ui/Button';
-import { useTimersContext } from '../store/timers-context';
+import { useTimersContext } from '../hooks/use-timers-context';
 
 const AddTimer = () => {
     const form = useRef<FormHandle>(null);

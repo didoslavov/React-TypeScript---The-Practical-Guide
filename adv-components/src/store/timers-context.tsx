@@ -1,4 +1,4 @@
-import { type ReactNode, createContext, useContext, useReducer } from 'react';
+import { type ReactNode, createContext, useReducer } from 'react';
 
 export type Timer = { id: number; name: string; duration: number };
 
@@ -28,15 +28,7 @@ const initialState: TimersState = {
     timers: [],
 };
 
-const TimersContext = createContext<TimersContextValue | null>(null);
-
-export const useTimersContext = () => {
-    const ctx = useContext(TimersContext);
-
-    if (!ctx) throw new Error('TimersContext is not provided');
-
-    return ctx;
-};
+export const TimersContext = createContext<TimersContextValue | null>(null);
 
 const timersReducer = (state: TimersState, action: Action): TimersState => {
     switch (action.type) {
